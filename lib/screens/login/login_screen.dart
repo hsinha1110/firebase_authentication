@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authentication/screens/forgot/forgot_password.dart';
 import 'package:firebase_authentication/screens/home/home_screen.dart';
 import 'package:firebase_authentication/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
@@ -33,23 +34,17 @@ class _LoginScreenState extends State<LoginScreen> {
         password: password.text.trim(),
       );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Login Successful"),
-        ),
-      );
-
-       Navigator.pushReplacement(
+      ScaffoldMessenger.of(
         context,
-        MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
-        ),
+      ).showSnackBar(const SnackBar(content: Text("Login Successful")));
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),backgroundColor: Colors.green,
-        ),
+        SnackBar(content: Text(e.toString()), backgroundColor: Colors.green),
       );
     }
   }
@@ -94,9 +89,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
               ),
-
-              const SizedBox(height: 30),
-
+              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgotPassword()),
+                    ); // Forgot Password Screen
+                  },
+                  child: const Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      color: Colors.indigo,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
